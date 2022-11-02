@@ -28,6 +28,9 @@
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 
+(when (maybe-require-package 'hl-todo)
+  (add-hook 'prog-mode-hook 'hl-todo-mode))
+
 
 
 (setq revert-without-query '(".*"))
