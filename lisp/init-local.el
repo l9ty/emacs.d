@@ -26,6 +26,7 @@
 
 (maybe-require-package 'gruvbox-theme)
 
+(global-set-key (kbd "<f5>") 'revert-buffer)
 
 
 
@@ -65,14 +66,16 @@
     (evil-define-key gosu/evil-key-state global-map (kbd (concat "<leader>" key)) sym))
 
   (define-key global-map (kbd "<leader>b") 'consult-buffer)
+  (define-key global-map (kbd "<leader>B") 'ibuffer)
   (define-key global-map (kbd "<leader>i") 'consult-imenu)
   (define-key global-map (kbd "<leader>o") 'switch-window)
   (define-key global-map (kbd "<leader>k") 'kill-current-buffer)
+  (define-key global-map (kbd "<leader>K") 'kill-other-buffers)
   (define-key global-map (kbd "<leader>f") 'find-file)
   (define-key global-map (kbd "<leader>l") 'consult-line)
   (define-key global-map (kbd "<leader>c") 'avy-goto-char-timer)
   (define-key global-map (kbd "<leader>1") 'sanityinc/toggle-delete-other-windows)
-  (define-key global-map (kbd "<leader>;") 'pop-to-mark-command)
+  (define-key global-map (kbd "<leader>,") 'pop-to-mark-command)
   (define-key global-map (kbd "<leader>`") 'save-buffers-kill-terminal)
 
   (gosu/define-evil-prefix '+register "r")
@@ -103,9 +106,29 @@
   (setq gdb-many-windows t))
 
 (when (maybe-require-package 'ggtags)
+
+  (defun gosu/gtags-mode ()
+    "Turn on/off the ggtags-mode for c-mode."
+    (interactive)
+    (if ggtags-mode
+        (remove-hook 'c-mode-common-hook 'ggtags-mode)
+      (add-hook 'c-mode-common-hook 'ggtags-mode)))
+
   (with-eval-after-load 'ggtags
-    (define-key ggtags-navigation-map (kbd "M-,")
-      'ggtags-navigation-mode-abort)))
+    (with-eval-after-load 'evil
+      (define-key ggtags-mode-map (kbd "<leader>.") 'ggtags-find-tag-dwim)
+      (define-key ggtags-mode-map (kbd "<leader>,") 'ggtags-navigation-mode-abort)
+      )
+    ))
+
+
+;; lua
+
+(when (package-installed-p 'lua-mode)
+  (with-eval-after-load 'page-break-lines
+    (add-to-list 'page-break-lines-modes 'lua-mode))
+  (with-eval-after-load 'lua-mode
+    (setq lua-indent-level 4)))
 
 
 
