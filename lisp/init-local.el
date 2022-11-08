@@ -59,6 +59,8 @@
 
 (with-eval-after-load 'evil
 
+  ;; Bug: key-bindings is invalid when first startup.
+
   (setq gosu/evil-key-state '(normal visual))
   (evil-set-leader gosu/evil-key-state (kbd "<SPC>"))
 
@@ -68,29 +70,28 @@
     (define-prefix-command sym)
     (evil-define-key gosu/evil-key-state global-map (kbd (concat "<leader>" key)) sym))
 
-  (define-key global-map (kbd "<leader>b") 'consult-buffer)
-  (define-key global-map (kbd "<leader>B") 'ibuffer)
-  (define-key global-map (kbd "<leader>i") 'consult-imenu)
-  (define-key global-map (kbd "<leader>o") 'switch-window)
-  (define-key global-map (kbd "<leader>k") 'kill-current-buffer)
-  (define-key global-map (kbd "<leader>K") 'kill-other-buffers)
-  (define-key global-map (kbd "<leader>f") 'find-file)
-  (define-key global-map (kbd "<leader>l") 'consult-line)
-  (define-key global-map (kbd "<leader>c") 'avy-goto-char-timer)
-  (define-key global-map (kbd "<leader>1") 'sanityinc/toggle-delete-other-windows)
-  (define-key global-map (kbd "<leader>,") 'pop-to-mark-command)
-  (define-key global-map (kbd "<leader>`") 'save-buffers-kill-terminal)
+  (global-set-key (kbd "<leader> ,") 'pop-to-mark-command)
+  (global-set-key (kbd "<leader> `") 'save-buffers-kill-terminal)
+  (global-set-key (kbd "<leader> b") 'consult-buffer)
+  (global-set-key (kbd "<leader> B") 'ibuffer)
+  (global-set-key (kbd "<leader> i") 'consult-imenu)
+  (global-set-key (kbd "<leader> o") 'switch-window)
+  (global-set-key (kbd "<leader> k") 'kill-current-buffer)
+  (global-set-key (kbd "<leader> K") 'kill-other-buffers)
+  (global-set-key (kbd "<leader> f") 'find-file)
+  (global-set-key (kbd "<leader> l") 'consult-line)
+  (global-set-key (kbd "<leader> c") 'avy-goto-char-timer)
+  (global-set-key (kbd "<leader> 1") 'sanityinc/toggle-delete-other-windows)
+  (global-set-key (kbd "<leader> 0") 'delete-window)
+  (global-set-key (kbd "<leader> 2")
+                  (split-window-func-with-other-buffer 'split-window-vertically))
+  (global-set-key (kbd "<leader> 3")
+                  (split-window-func-with-other-buffer 'split-window-horizontally))
 
   (gosu/define-evil-prefix '+register "r")
   (define-key +register (kbd "r") 'point-to-register)
   (define-key +register (kbd "p") 'jump-to-register)
   (define-key +register (kbd "l") 'consult-register)
-
-
-  ;; (define-prefix-command '+goto)
-  ;; (evil-define-key gosu/evil-key-state global-map (kbd "<leader>l") 'consult-line)
-  ;; (evil-define-key gosu/evil-key-state global-map (kbd "<leader>L") 'consult-line-multi)
-
   )
 
 
@@ -134,5 +135,7 @@
     (setq lua-indent-level 4)))
 
 
+
+;; TODO: yasnippet eglot
 
 (provide 'init-local)
