@@ -1,0 +1,5 @@
+# name: log info
+# key: li
+# group: resty
+# --
+log(INFO, $0)

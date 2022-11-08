@@ -1,0 +1,5 @@
+# name: log error
+# key: le
+# group: resty
+# --
+log(ERR, $0)

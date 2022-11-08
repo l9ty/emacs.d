@@ -137,5 +137,8 @@
 
 
 ;; TODO: yasnippet eglot
+(when (maybe-require-package 'yasnippet)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  )
 
 (provide 'init-local)
