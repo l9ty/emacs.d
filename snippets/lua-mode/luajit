@@ -1,0 +1,6 @@
+# name: luajit
+# key: luajit
+# --
+#!/usr/bin/env luajit
+
+$0

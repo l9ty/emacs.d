@@ -99,10 +99,11 @@
 
 ;; cc
 
-(setq c-default-style '((java-mode . "java")
-                        (awk-mode . "awk")
-                        (other . "linux")))
-(setq-default c-basic-offset 4)
+;; (setq c-default-style '((java-mode . "java")
+;;                         (awk-mode . "awk")
+;;                         (other . "linux")))
+;;
+;; (setq-default c-basic-offset 4)
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
@@ -114,12 +115,15 @@
   (defun gosu/gtags-mode ()
     "Turn on/off the ggtags-mode for c-mode."
     (interactive)
+    (require 'ggtags)
     (if ggtags-mode
         (remove-hook 'c-mode-common-hook 'ggtags-mode)
       (add-hook 'c-mode-common-hook 'ggtags-mode)))
 
   (with-eval-after-load 'ggtags
     (with-eval-after-load 'evil
+      (define-key ggtags-mode-map (kbd "<leader>[") 'ggtags-prev-mark)
+      (define-key ggtags-mode-map (kbd "<leader>]") 'ggtags-next-mark)
       (define-key ggtags-mode-map (kbd "<leader>.") 'ggtags-find-tag-dwim)
       (define-key ggtags-mode-map (kbd "<leader>,") 'ggtags-navigation-mode-abort)
       )
@@ -139,6 +143,8 @@
 ;; TODO: yasnippet eglot
 (when (maybe-require-package 'yasnippet)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (with-eval-after-load 'yasnippet
+    (yas-reload-all))
   )
 
 (provide 'init-local)

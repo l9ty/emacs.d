@@ -1,0 +1,6 @@
+# name: module function
+# key: mfun
+# --
+function ${1:_M}.$2(${3:self,})
+   $0
+end
