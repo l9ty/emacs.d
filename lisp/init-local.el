@@ -125,7 +125,8 @@
       (define-key ggtags-mode-map (kbd "<leader>[") 'ggtags-prev-mark)
       (define-key ggtags-mode-map (kbd "<leader>]") 'ggtags-next-mark)
       (define-key ggtags-mode-map (kbd "<leader>.") 'ggtags-find-tag-dwim)
-      (define-key ggtags-mode-map (kbd "<leader>,") 'ggtags-navigation-mode-abort)
+      ;; (define-key ggtags-mode-map (kbd "<leader>,") 'ggtags-navigation-mode-abort)
+      (define-key ggtags-mode-map (kbd "<leader>,") 'xref-pop-marker-stack)
       )
     ))
 
