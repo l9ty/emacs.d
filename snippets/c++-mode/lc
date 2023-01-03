@@ -1,0 +1,17 @@
+# name: leetcode template
+# key: lc
+# group: template
+# --
+#include "common.h"
+
+class Solution{
+public:
+    $0
+};
+
+int main()
+{
+  auto s = Solution();
+
+  return 0;
+}
