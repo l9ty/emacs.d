@@ -139,6 +139,19 @@
   (with-eval-after-load 'lua-mode
     (setq lua-indent-level 4)))
 
+;; Translate
+
+(when (maybe-require-package 'go-translate)
+  (with-eval-after-load 'go-translate
+    (setq gts-translate-list '(("en" "zh") ("zh" "en")))
+    (setq gts-default-translator
+          (gts-translator
+           :picker (gts-prompt-picker)
+           :engines (list (gts-google-engine) (gts-bing-engine))
+           :render (gts-buffer-render)))
+    (with-eval-after-load 'evil
+      (global-set-key (kbd "<leader> t") 'gts-do-translate))))
+
 
 
 ;; TODO: yasnippet eglot
