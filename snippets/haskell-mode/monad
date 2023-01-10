@@ -1,0 +1,14 @@
+# name: monad
+# key: imd
+# group: instance
+# --
+instance Functor $1 where
+  fmap = liftM
+
+instance Applicative $1 where
+  pure = undefined
+(<*>) = ap
+
+instance Monad $1 where
+  mx >>= f = undefined
+$0
