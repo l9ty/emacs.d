@@ -92,6 +92,12 @@
   (define-key +register (kbd "r") 'point-to-register)
   (define-key +register (kbd "p") 'jump-to-register)
   (define-key +register (kbd "l") 'consult-register)
+
+  (gosu/define-evil-prefix '+narrow "n")
+  (define-key +narrow (kbd "n") 'narrow-to-region)
+  (define-key +narrow (kbd "w") 'widen)
+  (define-key +narrow (kbd "d") 'narrow-to-defun)
+  (define-key +narrow (kbd "p") 'narrow-to-page)
   )
 
 
