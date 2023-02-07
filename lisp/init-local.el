@@ -110,13 +110,14 @@
 
 ;; cc
 
-;; (setq c-default-style '((java-mode . "java")
-;;                         (awk-mode . "awk")
-;;                         (other . "linux")))
-;;
-;; (setq-default c-basic-offset 4)
+(setq c-default-style '((java-mode . "java")
+                        (awk-mode . "awk")
+                        (other . "linux")))
+
+(setq-default c-basic-offset 4)
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
+(add-hook 'c-mode-common-hook 'superword-mode)
 
 (with-eval-after-load 'gud
   (setq gdb-many-windows t))
