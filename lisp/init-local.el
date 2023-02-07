@@ -98,6 +98,11 @@
   (define-key +narrow (kbd "w") 'widen)
   (define-key +narrow (kbd "d") 'narrow-to-defun)
   (define-key +narrow (kbd "p") 'narrow-to-page)
+
+  (with-eval-after-load 'elisp-slime-nav
+    (define-key elisp-slime-nav-mode-map
+      (kbd "<leader> .") 'elisp-slime-nav-find-elisp-thing-at-point)
+    )
   )
 
 
@@ -121,10 +126,15 @@
   (defun gosu/gtags-mode ()
     "Turn on/off the ggtags-mode for c-mode."
     (interactive)
+
     (require 'ggtags)
+    (defun open-gtags ()
+      (ggtags-mode 1)
+      (flymake-mode -1))
     (if ggtags-mode
-        (remove-hook 'c-mode-common-hook 'ggtags-mode)
-      (add-hook 'c-mode-common-hook 'ggtags-mode)))
+        (remove-hook 'c-mode-common-hook 'open-gtags)
+      (add-hook 'c-mode-common-hook 'open-gtags))
+    (revert-buffer))
 
   (with-eval-after-load 'ggtags
     (with-eval-after-load 'evil
@@ -142,21 +152,35 @@
 (when (package-installed-p 'lua-mode)
   (with-eval-after-load 'page-break-lines
     (add-to-list 'page-break-lines-modes 'lua-mode))
-  (with-eval-after-load 'lua-mode
-    (setq lua-indent-level 4)))
+  (setq lua-indent-level 4))
 
 ;; Translate
 
 (when (maybe-require-package 'go-translate)
+  (require-package 'posframe)
+
+  (setq gts-translate-list '(("en" "zh") ("zh" "en")))
+
   (with-eval-after-load 'go-translate
-    (setq gts-translate-list '(("en" "zh") ("zh" "en")))
+
+    (defun gosu/gts-buffer-render ()
+      "Use buffer render to translate."
+      (interactive)
+      (setq-local gts-default-translator
+                  (gts-translator
+                   :picker (gts-prompt-picker)
+                   :engines (list (gts-google-engine))
+                   :render (gts-buffer-render))))
+
     (setq gts-default-translator
           (gts-translator
            :picker (gts-prompt-picker)
-           :engines (list (gts-google-engine) (gts-bing-engine))
-           :render (gts-buffer-render)))
-    (with-eval-after-load 'evil
-      (global-set-key (kbd "<leader> t") 'gts-do-translate))))
+           :engines (list (gts-google-engine)) ; gts-bing-engine
+           :render (gts-posframe-pop-render)
+           )))
+
+  (with-eval-after-load 'evil
+    (global-set-key (kbd "<leader> t") 'gts-do-translate)))
 
 
 
