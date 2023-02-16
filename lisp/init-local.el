@@ -1,3 +1,5 @@
+(require 'init-pyim)
+
 (defun gosu/reset-font ()
 
   (defun font-exist-p (font)
@@ -7,14 +9,15 @@
 
   (when (display-graphic-p)
     (let ((ascii-height 130)
-          (chinese-fsize 20))
+          (chinese-fsize 16))
 
       (dolist (ascii-font '("Source Code Pro" "Fira Code"))
         (when (font-exist-p ascii-font)
           (set-face-attribute
            'default nil :family ascii-font :height ascii-height)))
 
-      (dolist (chinese-font '("WenQuanYi Micro Hei Mono"
+      (dolist (chinese-font '("Noto Sans CJK TC"
+                              "WenQuanYi Micro Hei Mono"
                               "Microsoft YaHei UI"))
         (when (font-exist-p chinese-font)
           (dolist (charset '(kana han symbol cjk-misc bopomofo))
@@ -61,7 +64,7 @@
 
   ;; Bug: key-bindings is invalid when first startup.
 
-  (setq gosu/evil-key-state '(normal visual))
+  (setq gosu/evil-key-state '(normal visual motion))
   (evil-set-leader gosu/evil-key-state (kbd "<SPC>"))
 
   (define-key global-map (kbd "<leader><SPC>") 'execute-extended-command)
@@ -116,6 +119,7 @@
 
 (setq-default c-basic-offset 4)
 
+
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'c-mode-common-hook 'superword-mode)
 
@@ -123,7 +127,6 @@
   (setq gdb-many-windows t))
 
 (when (maybe-require-package 'ggtags)
-
   (defun gosu/gtags-mode ()
     "Turn on/off the ggtags-mode for c-mode."
     (interactive)
@@ -143,9 +146,7 @@
       (define-key ggtags-mode-map (kbd "<leader>]") 'ggtags-next-mark)
       (define-key ggtags-mode-map (kbd "<leader>.") 'ggtags-find-tag-dwim)
       ;; (define-key ggtags-mode-map (kbd "<leader>,") 'ggtags-navigation-mode-abort)
-      (define-key ggtags-mode-map (kbd "<leader>,") 'xref-pop-marker-stack)
-      )
-    ))
+      (define-key ggtags-mode-map (kbd "<leader>,") 'xref-pop-marker-stack))))
 
 
 ;; lua
