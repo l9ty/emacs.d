@@ -185,6 +185,12 @@
     (global-set-key (kbd "<leader> t") 'gts-do-translate)))
 
 
+;; Org-Mode
+
+(when (maybe-require-package 'toc-org)
+  (add-hook 'org-mode toc-org-mode))
+
+
 
 ;; TODO: yasnippet eglot
 (when (maybe-require-package 'yasnippet)
