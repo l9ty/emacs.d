@@ -188,7 +188,7 @@
 ;; Org-Mode
 
 (when (maybe-require-package 'toc-org)
-  (add-hook 'org-mode toc-org-mode))
+  (add-hook 'org-mode 'toc-org-mode))
 
 
 
