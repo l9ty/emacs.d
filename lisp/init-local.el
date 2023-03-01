@@ -54,6 +54,7 @@
 
 
 ;; evil
+
 (require-package 'evil)
 (add-hook 'after-init-hook 'evil-mode)
 (setq evil-disable-insert-state-bindings t)
@@ -76,7 +77,7 @@
   (global-set-key (kbd "<leader> ,") 'pop-to-mark-command)
   (global-set-key (kbd "<leader> `") 'save-buffers-kill-terminal)
   (global-set-key (kbd "<leader> b") 'consult-buffer)
-  (global-set-key (kbd "<leader> B") 'ibuffer)
+  ;;  (global-set-key (kbd "<leader> B") 'ibuffer)
   (global-set-key (kbd "<leader> i") 'consult-imenu)
   (global-set-key (kbd "<leader> o") 'switch-window)
   (global-set-key (kbd "<leader> k") 'kill-current-buffer)
@@ -91,24 +92,20 @@
   (global-set-key (kbd "<leader> 3")
                   (split-window-func-with-other-buffer 'split-window-horizontally))
 
-  (gosu/define-evil-prefix '+register "r")
-  (define-key +register (kbd "r") 'point-to-register)
-  (define-key +register (kbd "p") 'jump-to-register)
-  (define-key +register (kbd "l") 'consult-register)
+  ;; (gosu/define-evil-prefix '+register "r")
+  ;; (define-key +register (kbd "r") 'point-to-register)
+  ;; (define-key +register (kbd "p") 'jump-to-register)
+  ;; (define-key +register (kbd "l") 'consult-register)
 
   (gosu/define-evil-prefix '+narrow "n")
   (define-key +narrow (kbd "n") 'narrow-to-region)
   (define-key +narrow (kbd "w") 'widen)
   (define-key +narrow (kbd "d") 'narrow-to-defun)
-  (define-key +narrow (kbd "p") 'narrow-to-page)
+  ;; (define-key +narrow (kbd "p") 'narrow-to-page)
 
   (with-eval-after-load 'elisp-slime-nav
     (define-key elisp-slime-nav-mode-map
-      (kbd "<leader> .") 'elisp-slime-nav-find-elisp-thing-at-point)
-    )
-  )
-
-
+      (kbd "<leader> .") 'elisp-slime-nav-find-elisp-thing-at-point)))
 
 
 ;; cc
@@ -127,7 +124,7 @@
   (setq gdb-many-windows t))
 
 (when (maybe-require-package 'ggtags)
-  (defun gosu/gtags-mode ()
+  (defun gosu/c-gtags-mode ()
     "Turn on/off the ggtags-mode for c-mode."
     (interactive)
 
@@ -188,7 +185,7 @@
 ;; Org-Mode
 
 (when (maybe-require-package 'toc-org)
-  (add-hook 'org-mode 'toc-org-mode))
+  (add-hook 'org-mode-hook 'toc-org-mode))
 
 
 
