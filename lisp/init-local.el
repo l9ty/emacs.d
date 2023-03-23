@@ -189,6 +189,9 @@
 
 
 
+(when (maybe-require-package 'expand-region)
+  (global-set-key (kbd "C-\\") 'er/expand-region))
+
 ;; TODO: yasnippet eglot
 (when (maybe-require-package 'yasnippet)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
