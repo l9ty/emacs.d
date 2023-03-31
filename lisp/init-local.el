@@ -35,6 +35,14 @@
   (add-hook 'prog-mode-hook 'hl-todo-mode))
 
 
+;; Adjust setup from init-*.el
+
+(defun gosu/close-flymake ()
+  (flymake-mode -1))
+
+(add-hook 'haskell-mode-hook 'gosu/close-flymake)
+
+
 
 (setq revert-without-query '(".*"))
 (global-set-key [remap kill-buffer] 'kill-current-buffer)

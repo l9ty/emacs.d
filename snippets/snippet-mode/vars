@@ -6,4 +6,5 @@
 # key: $2
 # group: $3
 # --
+# -*- mode: snippet -*-
 $0
