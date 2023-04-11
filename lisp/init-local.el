@@ -48,17 +48,26 @@
 (global-set-key [remap kill-buffer] 'kill-current-buffer)
 
 (defun kill-other-buffers ()
-  "Kill other buffers excluding scratch."
+  "Kill unvisible buffers."
   (interactive)
-  (defun filter (b)
-    (let ((name (buffer-name b)))
-      (not (or (string-prefix-p " "  name)
-               ;; (string-match-p "^\\*Messages\\*$" name)
-               (string-match-p "^\\*scratch\\$*" name)
-               (string-equal name (buffer-name (current-buffer)))))))
-  (mapcar (lambda (b) (kill-buffer b))
-          (seq-filter 'filter (buffer-list))))
+  (dolist (buf (buffer-list))
+    (let ((name (buffer-name buf)))
+      (when (not (or (string-prefix-p " " name)
+                     (string-match-p "^\\*scratch\\$*" name)
+                     (get-buffer-window buf 'visible)))
+        (kill-buffer buf)))))
 
+(defun gosu/surround-with (str)
+  (interactive "sEnter the string: ")
+  (when (string-empty-p str)
+    (setq str "="))
+  (let ((start (region-beginning))
+        (end (region-end)))
+    (save-excursion
+      (goto-char start)
+      (insert str)
+      (goto-char (+ end 1))
+      (insert str))))
 
 
 ;; evil
