@@ -204,7 +204,14 @@
 (when (maybe-require-package 'toc-org)
   (add-hook 'org-mode-hook 'toc-org-mode))
 
+(when (maybe-require-package 'valign)
+  (add-hook 'org-mode-hook 'valign-mode))
+
 
+
+(when (maybe-require-package 'nasm-mode)
+  (add-to-list 'auto-mode-alist '("\\.[sS]\\'" . nasm-mode))
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode)))
 
 (when (maybe-require-package 'expand-region)
   (global-set-key (kbd "C-\\") 'er/expand-region))
