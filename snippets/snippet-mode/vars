@@ -2,9 +2,9 @@
 # name: Snippet header
 # key: vars
 # --
+# -*- mode: snippet -*-
 # name: $1
 # key: $2
 # group: $3
 # --
-# -*- mode: snippet -*-
 $0

@@ -22,6 +22,7 @@
                   '(pyim-probe-punctuation-line-beginning
                     pyim-probe-punctuation-after-punctuation))
 
+    (setq-default pyim-outcome-trigger nil)
     (global-set-key (kbd "M-j") 'pyim-convert-string-at-point))
 
   (add-hook 'after-init-hook 'gosu/setup-pyim))

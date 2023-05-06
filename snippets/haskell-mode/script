@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: script
+# key: sc
+# --
+#!/usr/bin/env stack script
+
+$0

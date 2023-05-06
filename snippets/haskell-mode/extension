@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: extension
+# key: ext
+# --
+{-# ${1:LANGUAGE} ${2:OverloadedStrings} #-}
+$0
