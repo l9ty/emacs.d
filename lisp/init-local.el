@@ -81,6 +81,8 @@
 (with-eval-after-load 'evil
 
   ;; Bug: key-bindings is invalid when first startup.
+  (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
+  (evil-set-initial-state 'ibuffer-mode 'emacs)
 
   (setq gosu/evil-key-state '(normal visual motion))
   (evil-set-leader gosu/evil-key-state (kbd "<SPC>"))
@@ -91,7 +93,10 @@
     (define-prefix-command sym)
     (evil-define-key gosu/evil-key-state global-map (kbd (concat "<leader>" key)) sym))
 
-  (global-set-key (kbd "<leader> ,") 'pop-to-mark-command)
+  (global-set-key (kbd "<leader> .") 'xref-find-definitions)
+  (global-set-key (kbd "<leader> ,") 'xref-pop-marker-stack)
+  (global-set-key (kbd "<leader> ?") 'xref-find-references)
+
   (global-set-key (kbd "<leader> `") 'save-buffers-kill-terminal)
   (global-set-key (kbd "<leader> b") 'consult-buffer)
   ;;  (global-set-key (kbd "<leader> B") 'ibuffer)
