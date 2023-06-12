@@ -221,11 +221,15 @@
 (when (maybe-require-package 'expand-region)
   (global-set-key (kbd "C-\\") 'er/expand-region))
 
-;; TODO: yasnippet eglot
 (when (maybe-require-package 'yasnippet)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (with-eval-after-load 'yasnippet
     (yas-reload-all))
   )
+
+;; TODO: remove this if debian fdfind upgrade to v8.3.0+
+;; https://github.com/bbatsov/projectile/issues/1788
+(setq projectile-generic-command "fdfind . -0 --type f --color=never")
+(setq projectile-git-fd-args "-H -0 -E .git -tf")
 
 (provide 'init-local)
