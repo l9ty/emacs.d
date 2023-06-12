@@ -114,6 +114,9 @@
   (global-set-key (kbd "<leader> 3")
                   (split-window-func-with-other-buffer 'split-window-horizontally))
 
+  (with-eval-after-load 'projectile
+    (define-key projectile-mode-map (kbd "<leader> p") 'projectile-command-map))
+
   ;; (gosu/define-evil-prefix '+register "r")
   ;; (define-key +register (kbd "r") 'point-to-register)
   ;; (define-key +register (kbd "p") 'jump-to-register)
