@@ -1,3 +1,4 @@
+(require 'init-evil)
 (require 'init-pyim)
 
 (defun gosu/reset-font ()
@@ -70,69 +71,6 @@
       (insert str))))
 
 
-;; evil
-
-(require-package 'evil)
-(add-hook 'after-init-hook 'evil-mode)
-(setq evil-disable-insert-state-bindings t)
-(when (maybe-require-package 'undo-fu)
-  (setq evil-undo-system 'undo-fu))
-
-(with-eval-after-load 'evil
-
-  ;; Bug: key-bindings is invalid when first startup.
-  (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
-  (evil-set-initial-state 'ibuffer-mode 'emacs)
-
-  (setq gosu/evil-key-state '(normal visual motion))
-  (evil-set-leader gosu/evil-key-state (kbd "<SPC>"))
-
-  (define-key global-map (kbd "<leader><SPC>") 'execute-extended-command)
-
-  (defun gosu/define-evil-prefix (sym key)
-    (define-prefix-command sym)
-    (evil-define-key gosu/evil-key-state global-map (kbd (concat "<leader>" key)) sym))
-
-  (global-set-key (kbd "<leader> .") 'xref-find-definitions)
-  (global-set-key (kbd "<leader> ,") 'xref-pop-marker-stack)
-  (global-set-key (kbd "<leader> ?") 'xref-find-references)
-
-  (global-set-key (kbd "<leader> `") 'save-buffers-kill-terminal)
-  (global-set-key (kbd "<leader> b") 'consult-buffer)
-  ;;  (global-set-key (kbd "<leader> B") 'ibuffer)
-  (global-set-key (kbd "<leader> i") 'consult-imenu)
-  (global-set-key (kbd "<leader> o") 'switch-window)
-  (global-set-key (kbd "<leader> k") 'kill-current-buffer)
-  (global-set-key (kbd "<leader> K") 'kill-other-buffers)
-  (global-set-key (kbd "<leader> f") 'find-file)
-  (global-set-key (kbd "<leader> l") 'consult-line)
-  (global-set-key (kbd "<leader> c") 'avy-goto-char-timer)
-  (global-set-key (kbd "<leader> 1") 'sanityinc/toggle-delete-other-windows)
-  (global-set-key (kbd "<leader> 0") 'delete-window)
-  (global-set-key (kbd "<leader> 2")
-                  (split-window-func-with-other-buffer 'split-window-vertically))
-  (global-set-key (kbd "<leader> 3")
-                  (split-window-func-with-other-buffer 'split-window-horizontally))
-
-  (with-eval-after-load 'projectile
-    (define-key projectile-mode-map (kbd "<leader> p") 'projectile-command-map))
-
-  ;; (gosu/define-evil-prefix '+register "r")
-  ;; (define-key +register (kbd "r") 'point-to-register)
-  ;; (define-key +register (kbd "p") 'jump-to-register)
-  ;; (define-key +register (kbd "l") 'consult-register)
-
-  (gosu/define-evil-prefix '+narrow "n")
-  (define-key +narrow (kbd "n") 'narrow-to-region)
-  (define-key +narrow (kbd "w") 'widen)
-  (define-key +narrow (kbd "d") 'narrow-to-defun)
-  ;; (define-key +narrow (kbd "p") 'narrow-to-page)
-
-  (with-eval-after-load 'elisp-slime-nav
-    (define-key elisp-slime-nav-mode-map
-      (kbd "<leader> .") 'elisp-slime-nav-find-elisp-thing-at-point)))
-
-
 ;; cc
 
 (setq c-default-style '((java-mode . "java")
@@ -141,12 +79,36 @@
 
 (setq-default c-basic-offset 4)
 
-
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
-(add-hook 'c-mode-common-hook 'superword-mode)
+;; (add-hook 'c-mode-common-hook 'superword-mode)
 
-(with-eval-after-load 'gud
-  (setq gdb-many-windows t))
+(setq-default gdb-many-windows t)
+(setq-default gdb-default-window-configuration-file "gdb-windows.el")
+
+(when (maybe-require-package 'hydra)
+  (with-eval-after-load 'gud
+    (defhydra hydra-gud (:color pink :hint nil)
+      "
+_B_: break          _s_: step     _g_: until
+_t_: tbreak         _n_: next     _G_: jump
+_d_: delete break   _p_: print    _f_: finish
+
+_r_: run            _N_: continue
+"
+      ("B" gud-break)
+      ("t" gud-tbreak)
+      ("d" gud-remove)
+      ("s" gud-step)
+      ("n" gud-next)
+      ("p" gud-print)
+      ("g" gud-until)
+      ("G" gud-jump)
+      ("f" gud-finish)
+      ("r" gud-run)
+      ("N" gud-go)
+      ("q" nil "cancel"))
+
+    (define-key c-mode-map (kbd "<leader> d") 'hydra-gud/body)))
 
 (when (maybe-require-package 'ggtags)
   (defun gosu/c-gtags-mode ()
