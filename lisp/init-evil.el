@@ -13,6 +13,7 @@
   (evil-set-initial-state 'ibuffer-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
   (evil-set-initial-state 'rg-mode 'emacs)
+  (evil-set-initial-state 'diff-mode 'emacs)
   ;; (evil-set-initial-state 'compilation-mode 'emacs)
 
   (setq gosu/evil-key-state '(normal visual motion))

@@ -177,6 +177,25 @@ _r_: run            _N_: continue
 (when (maybe-require-package 'valign)
   (add-hook 'org-mode-hook 'valign-mode))
 
+(setq org-startup-folded 'content)
+
+(defun gosu/org-autotitle ()
+  "Insert title for new file."
+  (when (not (file-exists-p (buffer-name)))
+    (insert
+     "#+TITLE: "
+     (mapconcat 'capitalize
+                (split-string
+                 (file-name-sans-extension
+                  (buffer-name))
+                 "[- ]")
+                " ")
+     "\n"
+     "\n"
+     )))
+
+(add-hook 'org-mode-hook 'gosu/org-autotitle)
+
 
 
 (when (maybe-require-package 'nasm-mode)
