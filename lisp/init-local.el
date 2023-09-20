@@ -140,7 +140,19 @@ _r_: run            _N_: continue
     (add-to-list 'page-break-lines-modes 'lua-mode))
   (setq lua-indent-level 4))
 
-;; Translate
+
+;; go
+
+(when (maybe-require-package 'go-mode)
+  (defun gosu/go-mode-indent ()
+    (setq-local tab-width 4
+                indent-tabs-mode nil
+                tab-always-indent t
+                electric-indent-inhibit t)
+    )
+  (add-hook 'go-mode-hook 'gosu/go-mode-indent))
+
+ ;; Translate
 
 (when (maybe-require-package 'go-translate)
   (require-package 'posframe)
@@ -179,22 +191,51 @@ _r_: run            _N_: continue
 
 (setq org-startup-folded 'content)
 
-(defun gosu/org-autotitle ()
-  "Insert title for new file."
-  (when (not (file-exists-p (buffer-name)))
-    (insert
-     "#+TITLE: "
-     (mapconcat 'capitalize
-                (split-string
-                 (file-name-sans-extension
-                  (buffer-name))
-                 "[- ]")
-                " ")
-     "\n"
-     "\n"
-     )))
+;; (defun gosu/org-autotitle ()
+;;   "Insert title for new file."
+;;   (when (not (file-exists-p (buffer-name)))
+;;     (insert
+;;      "#+TITLE: "
+;;      (mapconcat 'capitalize
+;;                 (split-string
+;;                  (file-name-sans-extension
+;;                   (buffer-name))
+;;                  "[- ]")
+;;                 " ")
+;;      "\n"
+;;      "\n"
+;;      )))
+;; (add-hook 'org-mode-hook 'gosu/org-autotitle)
 
-(add-hook 'org-mode-hook 'gosu/org-autotitle)
+
+(with-eval-after-load 'org
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+  (setq org-capture-templates
+        '(
+
+          ("n" "note" entry
+           (file+datetree+prompt org-default-notes-file)
+           "* TODO %? %^g"
+           :clock-resume t)
+
+          ("c" "code snippet form region" entry
+           (file+datetree+prompt org-default-notes-file)
+           "* %^{title}
+
+#+begin_src %^{lang}
+%c
+#+end_src
+"
+           :clock-resume t)
+
+          ;; ("s" "snippet")
+          ;; ("sc" "c snieept")
+          ;; ("scm" "make file")
+
+          ))
+  )
+
 
 
 
