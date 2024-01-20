@@ -57,3 +57,4 @@ site-lisp/package/
 /eln-cache/
 /projects
 pyim
+/forge-*.sqlite
