@@ -9,6 +9,9 @@
 ;;; Code:
 
 (setq package-enable-at-startup nil)
+;; TODO emacs 29+
+;; (setq inhibit-automatic-native-compilation t)
+(setq native-comp-deferred-compilation nil)
 
 ;; So we can detect this having been loaded
 (provide 'early-init)
