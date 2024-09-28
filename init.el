@@ -93,12 +93,12 @@
 (require 'init-markdown)
 (require 'init-csv)
 ;; (require 'init-erlang)
-;; (require 'init-javascript)
-;; (require 'init-php)
+(require 'init-javascript)
+(require 'init-php)
 (require 'init-org)
 ;; (require 'init-nxml)
-;; (require 'init-html)
-;; (require 'init-css)
+(require 'init-html)
+(require 'init-css)
 ;; (require 'init-haml)
 ;; (require 'init-http)
 (require 'init-python)
@@ -107,7 +107,7 @@
 ;; (require 'init-purescript)
 ;; (require 'init-ruby)
 ;; (require 'init-rails)
-;; (require 'init-sql)
+(require 'init-sql)
 ;; (require 'init-ocaml)
 ;; (require 'init-j)
 ;; (require 'init-nim)
@@ -138,7 +138,7 @@
 
 (require 'init-lua)
 (require 'init-uiua)
-(require 'init-terminals)
+;; (require 'init-terminals)
 
 ;; Extra packages which don't require any configuration
 
